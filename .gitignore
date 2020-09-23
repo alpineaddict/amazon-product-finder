@@ -56,6 +56,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.vscode
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -185,4 +186,3 @@ config.py
 temp_testing.py
 pyvenv.cfg
 gecko*
-.vscode
