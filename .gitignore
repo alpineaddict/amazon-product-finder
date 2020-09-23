@@ -183,3 +183,6 @@ About
 # Custom files
 config.py
 temp_testing.py
+pyvenv.cfg
+gecko*
+.vscode
