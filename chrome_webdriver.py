@@ -24,11 +24,6 @@ class ChromeAmazonProductFinder():
         self.chrome_driver = webdriver.Chrome(chrome_options=options)
         self.chrome_driver.get(website_url)
         self.wait = WebDriverWait(self.chrome_driver, 20)
-        self.searchForProduct()
-        self.adjustSearchFilter()
-        self.goToProductPage()
-        self.addProductToCart()
-        self.goToCart()
 
     def userLogin(self):
         """

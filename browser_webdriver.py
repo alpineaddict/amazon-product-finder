@@ -1,5 +1,6 @@
 """
-Chrome automation for Amazon product search and find.
+Selenium browser object creation with methods to completely run through
+process of searching for a product and adding it to the cart. 
 """
 
 from selenium import webdriver
@@ -9,27 +10,26 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 import sys
-from time import sleep
 import config
 
 class AmazonProductFinder():
     def __init__ (self, browser, website_url, product_search):
         """
         Accept 3 parameters: browser type, website URL and product to search.
-        Create Selenium driver object, open up Amazon.com on specified browser.
-        Execute class methods to search for, find and add the product to cart. XXX Remove this
+        Create Selenium driver object, browse to website URL on specified 
+        browser.
         """
-        self.browser = browser
-        self.website_url = website_url
-        self.product_search = product_search
+        self.browser = browser.lower()
+        self.website_url = website_url.lower()
+        self.product_search = product_search.lower()
 
-        if 'chrome' in self.browser.lower():
+        if 'chrome' in self.browser:
             options = webdriver.ChromeOptions()
             options.add_experimental_option("detach", True)
             self.web_driver = webdriver.Chrome(chrome_options=options)
-        elif 'firefox' in self.browser.lower():
+        elif 'firefox' in self.browser:
             self.web_driver = webdriver.Firefox()
-        elif 'safari' in self.browser.lower():
+        elif 'safari' in self.browser:
             self.web_driver = webdriver.Safari()
         else:
             print("ERROR! Specified browser is not in supported browser list.")
@@ -61,9 +61,9 @@ class AmazonProductFinder():
 
     def adjustSearchFilter(self):
         """Adjust search filter to filter by highest average review"""
-        self.wait.until(ec.visibility_of_element_located((By.XPATH,
+        self.wait.until(ec.element_to_be_clickable((By.XPATH,
             "//*[@id='a-autoid-0-announce']"))).click()
-        self.wait.until(ec.visibility_of_element_located((By.XPATH,
+        self.wait.until(ec.element_to_be_clickable((By.XPATH,
              "//*[@id='s-result-sort-select_3']"))).click()
 
     def goToProductPage(self):
@@ -74,15 +74,28 @@ class AmazonProductFinder():
     def addProductToCart(self):
         """Add product to cart and decline extended warranty if present"""
         self.wait.until(ec.visibility_of_element_located((By.XPATH,
-            "//*[@id='submit.add-to-cart']"))).click()        
-        # Amazon does not always present warranty dialogue for all products
-        try:
-            decline_protection_plan = self.web_driver.find_element(
-                By.XPATH, "//*[@id='siNoCoverage-announce']")
-            self.web_driver.execute_script(
-                "arguments[0].click();", decline_protection_plan)
-        except NoSuchElementException:
-            pass
+            "//*[@id='submit.add-to-cart']"))).click()
+        self.declineWarrantyOffer()
+
+    # Amazon does not always present warranty dialogue for all products
+    # There is a bug in Chrome which necessitates execution of a javascript
+    def declineWarrantyOffer(self):
+        """Decline warranty offer pop up"""
+        if self.browser == 'chrome':
+            try:
+                decline_protection_plan = self.wait.until(
+                    ec.element_to_be_clickable((By.XPATH,
+                    "//*[@id='siNoCoverage-announce']")))
+                self.web_driver.execute_script(
+                    "arguments[0].click();", decline_protection_plan)
+            except NoSuchElementException:
+                pass
+        else:
+            try:
+                self.wait.until(ec.visibility_of_element_located((By.XPATH,
+                    "//*[@id='hlb-view-cart-announce']"))).click()            
+            except NoSuchElementException:
+                pass
 
     def goToCart(self):
         """Navigate to shopping cart"""

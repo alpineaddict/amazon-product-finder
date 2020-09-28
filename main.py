@@ -10,21 +10,19 @@ to the cart. Designed for use with Google Chrome, Firefox and Safari.
 # Task list 
 # TODO: Build out test framework with pytest
 # TODO: Make sure rogue chrome processes are killed on host machine
-# TODO: Possibly remove self prefix from web driver variable(s)
 # TODO: Create loop to add additional product
-# TODO: Remove "product" redundancy
 # TODO: Try except blocks for each method to catch element not found errors?
 
-# Things that are not working
-# XXX: Firefox: not declining protection plan
+# Things to fix
+# XXX: Firefox: not declining protection plan when ran through main()
+# XXX: Firefox script not closing after last method execution
 # XXX: Searching for "french press" on chrome
-# XXX: Safari not working
+# XXX: Safari not working at all
 
 from chrome_webdriver import ChromeAmazonProductFinder
 from firefox_webdriver import FirefoxAmazonProductFinder
 from safari_webdriver import SafariAmazonProductFinder
 from browser_webdriver import AmazonProductFinder
-import sys
 
 def userPrompt():
     """Prompt user to search for a product. Return product"""
@@ -44,8 +42,8 @@ def main():
     product_search = 'electric tea kettle'
     PRODUCT_WEBSITE = 'https://amazon.com'
 
-    browser = AmazonProductFinder('chrome', PRODUCT_WEBSITE, product_search)
-    # browser = AmazonProductFinder('firefox', PRODUCT_WEBSITE, product_search)
+    # browser = AmazonProductFinder('chrome', PRODUCT_WEBSITE, product_search)
+    browser = AmazonProductFinder('firefox', PRODUCT_WEBSITE, product_search)
     # browser = AmazonProductFinder('safari', PRODUCT_WEBSITE, product_search)
 
     browser.searchForProduct()
@@ -53,9 +51,6 @@ def main():
     browser.goToProductPage()
     browser.addProductToCart()
     browser.goToCart()
-
-    # browser = ChromeAmazonProductFinder(PRODUCT_WEBSITE, product_search)
-    # firefox_browser = FirefoxAmazonProductFinder(PRODUCT_WEBSITE, product_search)
 
     print("Script complete! Exiting program.")
 
