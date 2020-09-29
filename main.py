@@ -9,19 +9,18 @@ to the cart. Designed for use with Google Chrome, Firefox and Safari.
 
 # Task list 
 # TODO: Build out test framework with pytest
-# TODO: Make sure rogue chrome processes are killed on host machine
 # TODO: Create loop to add additional product
 # TODO: Try except blocks for each method to catch element not found errors?
+# TODO: Decide whether or not to leave browser choice in user prompt
 
 # Things to fix
-# XXX: Firefox: not declining protection plan when ran through main()
+# XXX: INCONSISTENCY: Firefox unable to decline warranty
+# XXX: INCONSISTENCY: Firefox unable to click "sort by" button
+# XXX: INCONSISTENCY: Firefox not able to go to cart
 # XXX: Firefox script not closing after last method execution
 # XXX: Searching for "french press" on chrome
 # XXX: Safari not working at all
 
-from chrome_webdriver import ChromeAmazonProductFinder
-from firefox_webdriver import FirefoxAmazonProductFinder
-from safari_webdriver import SafariAmazonProductFinder
 from browser_webdriver import AmazonProductFinder
 
 def userPrompt():
@@ -32,11 +31,13 @@ def userPrompt():
         "and add it to the shopping cart."
     )
     product_search = input("Product search: ")
-    return product_search
+    print("Browsers available: Chrome, Firefox, Safari.")
+    browser = input("Browser: ")
+    return product_search, browser
 
 def main():
     """Run user prompt search and build Selenium object. Initiate search"""
-    # product_search = userPrompt()
+    # product_search, browser = userPrompt()
 
     print("Script running. Please wait...")
     product_search = 'electric tea kettle'
@@ -45,6 +46,7 @@ def main():
     # browser = AmazonProductFinder('chrome', PRODUCT_WEBSITE, product_search)
     browser = AmazonProductFinder('firefox', PRODUCT_WEBSITE, product_search)
     # browser = AmazonProductFinder('safari', PRODUCT_WEBSITE, product_search)
+    # find_product = AmazonProductFinder(browser, PRODUCT_WEBSITE, product_search)
 
     browser.searchForProduct()
     browser.adjustSearchFilter()

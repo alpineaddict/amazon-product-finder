@@ -10,6 +10,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 import sys
+import traceback
 import config
 
 class AmazonProductFinder():
@@ -43,7 +44,7 @@ class AmazonProductFinder():
     def userLogin(self):
         """
         Log into amazon. This method is unused for now as logging in
-        via Selenium requires granting authentication permission via email
+        via Selenium requires granting authentication permission via email.
         """
         self.web_driver.find_element(By.XPATH,
             "//*[@id='nav-link-accountList']").click()        
@@ -68,7 +69,7 @@ class AmazonProductFinder():
 
     def goToProductPage(self):
         """Click on first result for product page"""
-        self.wait.until(ec.visibility_of_element_located((By.XPATH,
+        self.wait.until(ec.element_to_be_clickable((By.XPATH,
             "//div[@data-cel-widget='search_result_1']//img"))).click()
         
     def addProductToCart(self):
@@ -85,19 +86,42 @@ class AmazonProductFinder():
             try:
                 decline_protection_plan = self.wait.until(
                     ec.element_to_be_clickable((By.XPATH,
-                    "//*[@id='siNoCoverage-announce']")))
+                    "/html/body/div[4]/div/div/header/button")))
                 self.web_driver.execute_script(
                     "arguments[0].click();", decline_protection_plan)
             except NoSuchElementException:
                 pass
         else:
             try:
-                self.wait.until(ec.visibility_of_element_located((By.XPATH,
-                    "//*[@id='hlb-view-cart-announce']"))).click()            
+                self.wait.until(ec.element_to_be_clickable((By.XPATH,
+                    "/html/body/div[4]/div/div/header/button"))).click()
+                self.wait.until(ec.element_to_be_clickable((By.XPATH,
+                    "//*[@id='siNoCoverage-announce']"))).click()
             except NoSuchElementException:
                 pass
+            except:
+                errorFile = open('error_log.txt', 'a')
+                errorFile.write(traceback.format_exc())
+                errorFile.close()
+                print('The traceback info was written to error_log.txt')
+
+            
+            # nested try statements:
+            # try:
+            #     try:
+            #         self.wait.until(ec.element_to_be_clickable((By.XPATH,
+            #             "/html/body/div[4]/div/div/header/button"))).click()
+            #     except NoSuchElementException:
+            #         pass
+            #     try:
+            #         self.wait.until(ec.element_to_be_clickable((By.XPATH,
+            #             "//*[@id='siNoCoverage-announce']"))).click()
+            #     except NoSuchElementException:
+            #         pass
+            # except NoSuchElementException:
+            #     pass
 
     def goToCart(self):
         """Navigate to shopping cart"""
-        self.wait.until(ec.visibility_of_element_located((By.XPATH,
+        self.wait.until(ec.element_to_be_clickable((By.XPATH,
             "//*[@id='hlb-view-cart-announce']"))).click()

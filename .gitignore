@@ -190,3 +190,4 @@ chrome_webdriver.py
 firefox_webdriver.py
 safari_webdriver.py
 .DS_*
+trash
