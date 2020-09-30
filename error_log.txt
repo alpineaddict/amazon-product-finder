@@ -5,3 +5,31 @@ Traceback (most recent call last):
     raise TimeoutException(message, screen, stacktrace)
 selenium.common.exceptions.TimeoutException: Message: 
 
+Traceback (most recent call last):
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/browser_webdriver.py", line 98, in declineWarrantyOffer
+    self.wait.until(ec.element_to_be_clickable((By.XPATH,
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/env/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+Traceback (most recent call last):
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/browser_webdriver.py", line 98, in declineWarrantyOffer
+    self.wait.until(ec.element_to_be_clickable((By.XPATH,
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/env/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+Traceback (most recent call last):
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/browser_webdriver.py", line 98, in declineWarrantyOffer
+    self.wait.until(ec.element_to_be_clickable((By.XPATH,
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/env/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+Traceback (most recent call last):
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/browser_webdriver.py", line 98, in declineWarrantyOffer
+    self.wait.until(ec.element_to_be_clickable((By.XPATH,
+  File "/Users/ross/Python/mac-dev/amazon-product-finder/env/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
