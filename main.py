@@ -12,20 +12,15 @@ to the cart. Designed for use with Google Chrome, Firefox and Safari.
 # TODO: Create loop to add additional product
 # TODO: Try except blocks for each method to catch element not found errors?
 
-# XXX: Notes for next steps...
-# XXX: Remove waits.. then use PDB to get full stack trace of why elements could not be found?
-
 # Things to fix
-# XXX: INCONSISTENCY: Firefox unable to decline warranty
-# XXX: INCONSISTENCY: Firefox unable to click "sort by" button
-    # "Sort by: Featured" gets highlighted, but dropdown does not appear.
-# XXX: INCONSISTENCY: Firefox not able to go to cart - related to decline warranty offer
-# XXX: Firefox script not closing after last method execution
-# XXX: Searching for "french press" on chrome
-# XXX: Safari not working at all
+# Safari breaking on addProductToCart.. not clicking on 1st product in results
+# Safari closing out of window when finished, even when quit is not executed
+# Safari window opens too smol; increase size
+# Safari not clicking first product result if best seller
 
 from browser_webdriver import AmazonProductFinder
-import sys
+import sys   # XXX unnecessary?
+from time import sleep
 
 def userPrompt():
     """Prompt user to search for a product. Return product"""
@@ -51,33 +46,31 @@ def userPrompt():
 def main():
     """Run user prompt search and build Selenium object. Initiate search"""
     PRODUCT_WEBSITE = 'https://amazon.com'
-    # product_search, browser.lower() = userPrompt()
+    product_search, browser.lower() = userPrompt()
     print("Script running. Please wait...")
 
     # XXX: Remove these lines once testing is no longer needed
-    product_search = 'electric tea kettle'
+    # product_search = 'french press'
     # browser = AmazonProductFinder('chrome', PRODUCT_WEBSITE, product_search)
-    browser = AmazonProductFinder('firefox', PRODUCT_WEBSITE, product_search)
+    # browser = AmazonProductFinder('firefox', PRODUCT_WEBSITE, product_search)
     # browser = AmazonProductFinder('safari', PRODUCT_WEBSITE, product_search)
 
-    # XXX: uncomment this line for final script execution once bugs are worked out:
-    # find_product = AmazonProductFinder(browser, PRODUCT_WEBSITE, product_search)
+    find_product = AmazonProductFinder(browser, PRODUCT_WEBSITE, product_search)
     browser.searchForProduct()
     browser.adjustSortOrder()
     browser.goToProductPage()
-    # browser.addProductToCart()
-    # browser.goToCart()
-    # browser.closeBrowserWindow()
+    browser.addProductToCart()
+    browser.goToCart()
+    browser.closeBrowserWindow()
     print("Script complete! Exiting program.")
 
 if __name__ == '__main__':
-    counter = 1
-    for iter in range(25):
-        print(f"Run # {counter}")
-        main()
-        print()
-        counter += 1
+    main()
 
-
-# TODO: build out if/else statement for "best seller" results as XML is different
-# Class value cannot contain "a-section a-spacing-none"
+    # XXX: Remove once testing is complete
+    # counter = 1
+    # for iter in range(25):
+    #     print(f"Run # {counter}")
+    #     main()
+    #     print()
+    #     counter += 1
