@@ -14,7 +14,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import sys
-import traceback
 import config
 from time import sleep
 
@@ -63,13 +62,19 @@ class AmazonProductFinder():
 
     def adjustSortOrder(self):
         """Adjust search filter to filter by highest average review"""
-        sleep(5)
-        sort_by_button = self.web_driver.find_element(By.XPATH,
-            "//*[@id='a-autoid-0-announce']").click()
-        sleep(3)
-        sort_by_avg_customer_review = self.web_driver.find_element(By.XPATH,
-            "//*[@id='s-result-sort-select_3']")
-        sort_by_avg_customer_review.click()
+        # Loop logic needed here as occasionally Selenium will not find xpath
+        # despite xpath exiting in page XML.
+        while True:
+            try:
+                sleep(5)
+                self.web_driver.find_element(By.XPATH,
+                    "//*[@id='a-autoid-0-announce']").click()
+                sleep(3)
+                self.web_driver.find_element(By.XPATH,
+                    "//*[@id='s-result-sort-select_3']").click()
+                break
+            except NoSuchElementException:
+                continue
 
     def goToProductPage(self):
         """Click on first result for product page"""
@@ -90,17 +95,24 @@ class AmazonProductFinder():
 
     def addProductToCart(self):
         """Add product to cart and decline extended warranty if present"""
-        sleep(5)
-        add_to_cart = self.web_driver.find_element(By.XPATH,
-            "//*[@id='add-to-cart-button']").click()
-        sleep(5)
-        self.declineWarrantyOffer()
+        try:
+            sleep(5)
+            self.web_driver.find_element(By.XPATH,
+                "//*[@id='add-to-cart-button']").click()
+            sleep(5)
+            self.declineWarrantyOffer()
+        except NoSuchElementException:
+            print("ERROR! Item does not have an 'add to cart' button.")
+            print("Please re-run script and choose a product that can be "
+                "added to an Amazon cart.")
+            print("Exiting program.")
+            sys.exit()
 
-    # Amazon does not always present warranty dialogue for all products
-    # Javascript neccessary as there is a Selenium bug with modal interactions
     def declineWarrantyOffer(self):
         """Decline warranty offer pop up"""
         try:
+            # Amazon does not always present warranty dialogue for all products
+            # Javascript neccessary as there is a Selenium bug with modal interactions
             decline_warranty_offer = self.web_driver.find_element(By.XPATH,
                 "/html/body/div[4]/div/div/header/button")
             self.web_driver.execute_script("arguments[0].click();",
