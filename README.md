@@ -3,6 +3,8 @@
 
 Amazon product finder is a selenium driven, python based script that will prompt user for a product to search for, and then find the highest average rated product from said search. Once the product is found it will then be added to the cart. This is designed to work with Chrome, Firefox and Safari. 
 
+![](screenshot.jpg)
+
 ### Script workflow
 - Prompt user for browser choice and product search
 - Open up web browser
@@ -15,28 +17,29 @@ Amazon product finder is a selenium driven, python based script that will prompt
 
 ## Environment Setup
 
-1. In order to utilize Selenium webdriver with a browser, you will need to install the browser webdriver files. See links below with instructions for each web browser.- [Google Chrome][chrome]
+1. In order to utilize Selenium webdriver with a browser, you will need to install the browser webdriver files. See links below with instructions for each web browser.
+- [Google Chrome][chrome]
 - [Firefox][firefox]
 - [Safari][safari]
 
 2. Install Python (mac-oriented)
-** First, install homebrew **
+*First, install homebrew*
 ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"```
 ** Install Python 3 via homebrew **
 ```brew install python```
 
-3. Set up virtual environment (recommended, not required)
-** version/path dependent on your Python installation **
-```python3 -m pip install --user virtualenv```
+3. Set up virtual environment (recommended, not required)\n
+*Version/path dependent on your Python installation*\n
+```python3 -m pip install --user virtualenv```\n
 ```python3 -m venv env```
 
-4. Activate virtual environment from working directory in repository
+4. Activate virtual environment from working directory in repository\n
 ```source env/bin/activate```
 
-5. Download requirements.txt file to your working repository, then install required packages via pip
+5. Download requirements.txt file to your working repository, then install required packages via pip\n
 ```pip install -r requirements.txt```
 
-## Running the application
+## Running the application\n
 ```python main.py```
 
 <!-- Markdown link & img dfn's -->
