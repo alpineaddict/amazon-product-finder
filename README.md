@@ -3,7 +3,7 @@
 
 Amazon product finder is a selenium driven, python based script that will prompt user for a product to search for, and then find the highest average rated product from said search. Once the product is found it will then be added to the cart. This is designed to work with Chrome, Firefox and Safari. 
 
-![](screenshot.jpg)
+![](screenshot.png)
 
 ### Script workflow
 - Prompt user for browser choice and product search
@@ -22,24 +22,24 @@ Amazon product finder is a selenium driven, python based script that will prompt
 - [Firefox][firefox]
 - [Safari][safari]
 
-2. Install Python (mac-oriented)
-*First, install homebrew*
-```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"```
-** Install Python 3 via homebrew **
-```brew install python```
+2. Install Python (mac-oriented)\
+*First, install homebrew*\
+```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"```\
+*Install Python 3 via homebrew*\
+```brew install python```\
 
-3. Set up virtual environment (recommended, not required)\n
-*Version/path dependent on your Python installation*\n
-```python3 -m pip install --user virtualenv```\n
-```python3 -m venv env```
+3. Set up virtual environment (recommended, not required)\
+*Version/path dependent on your Python installation*\
+```python3 -m pip install --user virtualenv```\
+```python3 -m venv env```\
 
-4. Activate virtual environment from working directory in repository\n
-```source env/bin/activate```
+4. Activate virtual environment from working directory in repository\
+```source env/bin/activate```\
 
-5. Download requirements.txt file to your working repository, then install required packages via pip\n
+5. Download requirements.txt file to your working repository, then install required packages via pip\
 ```pip install -r requirements.txt```
 
-## Running the application\n
+## Running the application\
 ```python main.py```
 
 <!-- Markdown link & img dfn's -->
