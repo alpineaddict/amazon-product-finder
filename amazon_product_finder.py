@@ -10,6 +10,7 @@ to the cart. Designed for use with Google Chrome, Firefox and Safari.
 # Task list 
 # TODO: Build out test framework with pytest
 # TODO: Try except blocks for each method to catch element not found errors?
+# TODO: Close out if no results found
 
 from browser_webdriver import AmazonProductFinder
 import sys

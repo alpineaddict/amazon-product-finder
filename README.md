@@ -18,9 +18,9 @@ Amazon product finder is a selenium driven, python based script that will prompt
 ## Environment Setup
 
 1. In order to utilize Selenium webdriver with a browser, you will need to install the browser webdriver files. See links below with instructions for each web browser.
-- [Google Chrome][chrome]
-- [Firefox][firefox]
-- [Safari][safari]
+    - [Google Chrome][chrome]
+    - [Firefox][firefox]
+    - [Safari][safari]
 
 2. Install Python (mac-oriented)  
 *First, install homebrew*  
