@@ -7,15 +7,10 @@ search for the product, filter by highest rated item and then add said item
 to the cart. Designed for use with Google Chrome, Firefox and Safari.
 """
 
-# Task list 
-# TODO: Build out test framework with pytest
-# TODO: Try except blocks for each method to catch element not found errors?
-# TODO: Close out if no results found
-
-from browser_webdriver import AmazonProductFinder
 import sys
+from browser_webdriver import AmazonProductFinder
 
-def userPrompt():
+def user_prompt():
     """Prompt user to search for a product. Return product"""
     print("=" * 28, "AMAZON PRODUCT FINDER" ,"=" * 28)
     print("Please choose a browser to use and input a product to search for, "
@@ -31,45 +26,41 @@ def userPrompt():
             print("ERROR! Specified browser is not in supported browser list.")
             print("Please try again.")
             continue
-        else:
-            product_search = input("Product search: ")
-            break
+    product_search = input("Product search: ")
     return browser_type.lower(), product_search
 
-def additionalProductSearchPrompt():
+def additional_product_search_prompt():
     """Prompt user whether or not to search for another product"""
     choices = ['yes', 'no']
-    
     print("Would you like to search for another product?")
+
     while True:
         answer = input("Yes/No: ").lower()
-        if answer in choices:
-            return answer.lower()
-        else: 
+        if answer not in choices:
             print("ERROR! Please type yes or no.")
             continue
+        return answer.lower()
 
 def main():
     """Run user prompt search and build Selenium object. Initiate search"""
     PRODUCT_WEBSITE = 'https://amazon.com'
 
     while True:
-        browser_type, product_search = userPrompt()
+        browser_type, product_search = user_prompt()
         print("Script running. Please wait...")
         selenium_browser = AmazonProductFinder(browser_type, PRODUCT_WEBSITE, product_search)
-        selenium_browser.searchForProduct()
-        selenium_browser.adjustSortOrder()
-        selenium_browser.goToProductPage()
-        selenium_browser.addProductToCart()
-        selenium_browser.goToCart()
+        selenium_browser.search_for_product()
+        selenium_browser.adjust_sort_order()
+        selenium_browser.go_to_product_page()
+        selenium_browser.add_product_to_cart()
+        selenium_browser.go_to_cart()
         print("Script complete!")
-    
-        if additionalProductSearchPrompt() == 'yes':
+
+        if additional_product_search_prompt() == 'yes':
             continue
-        else:
-            print("Closing browser window. Exiting program.")
-            selenium_browser.closeBrowserWindow()
-            sys.exit()
+        print("Closing browser window. Exiting program.")
+        selenium_browser.close_browser_window()
+        sys.exit()
 
 if __name__ == '__main__':
     main()
